@@ -120,6 +120,7 @@ module TurboTests
         pending_message: result.pending_message,
         status: result.status,
         pending_fixed?: result.pending_fixed?,
+        run_time: result.run_time,
         exception: exception_to_json(result.exception || result.pending_exception)
       }
     end
@@ -133,10 +134,12 @@ module TurboTests
 
     def example_to_json(example)
       {
+        id: example.id,
         execution_result: execution_result_to_json(example.execution_result),
         location: example.location,
         description: example.description,
         full_description: example.full_description,
+        exception: exception_to_json(example.exception),
         metadata: {
           shared_group_inclusion_backtrace:
             example

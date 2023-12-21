@@ -36,12 +36,13 @@ module TurboTests
     end
   end
 
-  FakeExecutionResult = Struct.new(:example_skipped?, :pending_message, :status, :pending_fixed?, :exception, :pending_exception)
+  FakeExecutionResult = Struct.new(:example_skipped?, :pending_message, :run_time, :status, :pending_fixed?, :exception, :pending_exception)
   class FakeExecutionResult
     def self.from_obj(obj)
       new(
         obj[:example_skipped?],
         obj[:pending_message],
+        obj[:run_time],
         obj[:status].to_sym,
         obj[:pending_fixed?],
         FakeException.from_obj(obj[:exception]),
@@ -50,7 +51,7 @@ module TurboTests
     end
   end
 
-  FakeExample = Struct.new(:execution_result, :location, :description, :full_description, :metadata, :location_rerun_argument)
+  FakeExample = Struct.new(:id, :execution_result, :location, :description, :full_description, :metadata, :location_rerun_argument, :exception)
   class FakeExample
     def self.from_obj(obj)
       metadata = obj[:metadata]
@@ -65,12 +66,14 @@ module TurboTests
       metadata[:shared_group_inclusion_backtrace] = metadata.delete(:shared_group_inclusion_backtrace)
 
       new(
+        obj[:id],
         FakeExecutionResult.from_obj(obj[:execution_result]),
         obj[:location],
         obj[:description],
         obj[:full_description],
         metadata,
-        obj[:location_rerun_argument]
+        obj[:location_rerun_argument],
+        FakeException.from_obj(obj[:exception])
       )
     end
 

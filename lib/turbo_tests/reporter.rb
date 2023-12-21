@@ -87,10 +87,18 @@ module TurboTests
       @errors_outside_of_examples_count += 1
     end
 
+    def examples
+      @all_examples
+    end
+
     def finish
       # SEE: https://bit.ly/2NP87Cz
       end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
+      delegate_to_formatters(:stop,
+        RSpec::Core::Notifications::ExamplesNotification.new(
+          self
+        ))
       delegate_to_formatters(:start_dump,
         RSpec::Core::Notifications::NullNotification)
       delegate_to_formatters(:dump_pending,
