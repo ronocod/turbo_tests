@@ -146,6 +146,8 @@ module TurboTests
               .metadata[:shared_group_inclusion_backtrace]
               .map { |frame| stack_frame_to_json(frame) },
           extra_failure_lines: example.metadata[:extra_failure_lines],
+          file_path: example.metadata[:file_path],
+          line_number: example.metadata[:line_number],
         },
         location_rerun_argument: example.location_rerun_argument,
       }
