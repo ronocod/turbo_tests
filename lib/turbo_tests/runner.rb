@@ -241,7 +241,7 @@ module TurboTests
         when "group_started"
           @reporter.group_started(message[:group].to_struct)
         when "group_finished"
-          @reporter.group_finished
+          @reporter.group_finished(message[:group].to_struct)
         when "example_pending"
           example = FakeExample.from_obj(message[:example])
           @reporter.example_pending(example)

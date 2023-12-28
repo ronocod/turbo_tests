@@ -54,8 +54,8 @@ module TurboTests
       delegate_to_formatters(:example_group_started, notification)
     end
 
-    def group_finished
-      delegate_to_formatters(:example_group_finished, nil)
+    def group_finished(notification)
+      delegate_to_formatters(:example_group_finished, notification)
     end
 
     def example_passed(example)
